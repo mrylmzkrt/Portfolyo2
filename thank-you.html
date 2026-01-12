@@ -3,61 +3,304 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Message Received | Emre Yılmazkart</title>
+    <title>Emre Yılmazkart | Message Received</title>
     
-    <!-- Fontlar ve İkonlar -->
+    <!-- İkonlar için FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- El Yazısı Fontu -->
     <link href="https://fonts.googleapis.com/css2?family=Reenie+Beanie&display=swap" rel="stylesheet">
 
     <style>
-        /* --- ORTAK STİL --- */
+        /* --- ORTAK CSS --- */
         :root { --bg-main: #0D0D0D; --bg-card: #1A1A1A; --accent: #EAFF00; --text-main: #FFFFFF; --text-muted: #B3B3B3; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--bg-main); color: var(--text-main); font-family: 'Segoe UI', sans-serif; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; overflow: hidden; }
+        body { background-color: var(--bg-main); color: var(--text-main); font-family: 'Segoe UI', sans-serif; line-height: 1.6; position: relative; overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
         
-        #bg-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.6; }
-        
-        .message-box {
-            background: rgba(20, 20, 20, 0.8);
-            backdrop-filter: blur(15px);
-            padding: 50px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        /* --- DÖNEN KENARLIK İÇİN AÇI DEĞİŞKENİ --- */
+        @property --angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
         }
 
-        @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        /* --- BACKGROUND --- */
+        #bg-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background-color: var(--bg-main); 
+        }
+        #bg-animation { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.6; }
 
-        .icon-box { font-size: 4rem; color: var(--accent); margin-bottom: 20px; }
-        h1 { font-size: 2.5rem; margin-bottom: 10px; color: #fff; }
-        h1 span { color: var(--accent); }
-        p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 30px; }
+        /* --- HEADER --- */
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 25px 5%; 
+            background: transparent; 
+            border-bottom: 1px solid transparent;
+            position: fixed; 
+            top: 0; 
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.4s ease-in-out;
+        }
 
+        .logo { font-size: 1.3rem; font-weight: bold; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px rgba(0,0,0,0.5); z-index: 1001; }
+        
+        .hamburger { display: none; cursor: pointer; z-index: 1001; }
+        .bar { display: block; width: 25px; height: 3px; margin: 5px auto; transition: all 0.3s ease-in-out; background-color: #fff; }
+
+        nav ul { 
+            display: flex; list-style: none; gap: 20px; 
+            background: rgba(20, 20, 20, 0.6); 
+            padding: 10px 25px; 
+            border-radius: 30px; 
+            backdrop-filter: blur(10px); 
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.4s ease-in-out; 
+        }
+
+        nav a { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); }
+        nav a:hover, nav a.active { color: var(--accent); text-shadow: 0 0 5px rgba(234, 255, 0, 0.5); }
+        
+        .mobile-motto { display: none; }
+
+        /* --- CONTENT WRAPPER --- */
+        .container { 
+            flex: 1; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 120px 5% 60px;
+            position: relative; 
+            z-index: 2; 
+        }
+
+        /* --- THANK YOU BOX --- */
+        .message-box {
+            position: relative;
+            background: rgba(20, 20, 20, 0.6); 
+            backdrop-filter: blur(15px); 
+            -webkit-backdrop-filter: blur(15px);
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        /* Dönen Kenarlık */
+        .message-box::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 20px; 
+            padding: 2px; 
+            background: conic-gradient(from var(--angle), transparent 25%, var(--accent), transparent 75%);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            z-index: 1;
+            pointer-events: none;
+            animation: rotateBorder 4s linear infinite;
+        }
+
+        @keyframes rotateBorder { to { --angle: 360deg; } }
+
+        /* İkon Animasyonu */
+        .success-icon {
+            font-size: 4rem;
+            color: var(--accent);
+            margin-bottom: 20px;
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            display: inline-block;
+            text-shadow: 0 0 20px rgba(234, 255, 0, 0.4);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .message-box h1 { font-size: 2.5rem; color: #fff; margin-bottom: 15px; letter-spacing: 1px; line-height: 1.1; }
+        .message-box h1 span { color: var(--accent); }
+        .message-box p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 40px; }
+
+        /* Buton */
         .btn-home {
             display: inline-block;
-            padding: 12px 30px;
-            border: 1px solid var(--accent);
+            padding: 15px 40px;
+            background: transparent;
             color: #fff;
-            text-decoration: none;
-            border-radius: 50px;
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            font-size: 1rem;
             font-weight: bold;
-            transition: 0.3s;
             text-transform: uppercase;
             letter-spacing: 1px;
+            transition: 0.3s;
+            cursor: pointer;
         }
-        .btn-home:hover { background: var(--accent); color: #000; box-shadow: 0 0 20px rgba(234, 255, 0, 0.4); }
+
+        .btn-home:hover {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 0 30px rgba(234, 255, 0, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* --- FOOTER --- */
+        footer { padding: 40px; text-align: center; border-top: 1px solid #333; background: #0D0D0D; margin-top: auto;}
+        footer p { 
+            font-family: 'Reenie Beanie', cursive; 
+            color: var(--accent); 
+            font-size: 1.8rem; 
+            margin: 0;
+            opacity: 0.8;
+            transform: none;
+        }
+
+        @media (max-width: 768px) {
+            .message-box { padding: 40px 20px; }
+            .message-box h1 { font-size: 2rem; }
+            
+            .hamburger { display: block; }
+            nav {
+                display: flex; position: fixed; left: -100%; top: 0; flex-direction: column;
+                background-color: rgba(13, 13, 13, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+                width: 100%; height: 100%; justify-content: center; align-items: center; transition: 0.3s; z-index: 1000;
+            }
+            nav.active { left: 0; }
+            nav ul { flex-direction: column; background: none; padding: 0; gap: 40px; border: none; align-items: center; }
+            nav a { font-size: 1.5rem; font-weight: 700; }
+
+            .mobile-motto {
+                display: block; position: absolute; bottom: 60px;
+                font-family: 'Reenie Beanie', cursive; color: var(--accent); font-size: 1.8rem;
+                transform: rotate(-5deg); text-align: center; width: 100%; opacity: 0.8; pointer-events: none;
+            }
+            .hamburger.active .bar:nth-child(2) { opacity: 0; }
+            .hamburger.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .hamburger.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+        }
     </style>
 </head>
 <body>
-    <div class="message-box">
-        <div class="icon-box"><i class="fa-solid fa-check-circle"></i></div>
-        <h1>Message <span>Received</span></h1>
-        <p>Thank you for reaching out! I'll get back to you shortly.</p>
-        <a href="index.html" class="btn-home">Back to Home</a>
+    
+    <div id="bg-container">
+        <!-- Tech Grid Canvas -->
+        <canvas id="bg-animation"></canvas>
     </div>
+
+    <header id="main-header">
+        <div class="logo">EMRE YILMAZKART_</div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <nav id="navbar">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="mobile-motto">faber est suae quisque fortunae</div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="message-box">
+            <div class="success-icon">
+                <i class="fa-solid fa-paper-plane"></i>
+            </div>
+            <h1>Message <span style="color: var(--accent);">Received.</span></h1>
+            <p>Thank you for reaching out. I have received your message and will get back to you shortly.</p>
+            
+            <a href="index.html" class="btn-home">Back to Home</a>
+        </div>
+    </div>
+
+    <footer><p>2026, Emre Yılmazkart</p></footer>
+
+    <!-- JS -->
+    <script>
+        function toggleMenu() {
+            const hamburger = document.querySelector(".hamburger");
+            const nav = document.getElementById("navbar");
+            hamburger.classList.toggle("active");
+            nav.classList.toggle("active");
+        }
+
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('main-header');
+            if(window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // --- TECH GRID ANIMATION ---
+        const canvas = document.getElementById('bg-animation');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let circles = [];
+        const mouse = { x: undefined, y: undefined };
+        const darkColor = { r: 40, g: 40, b: 40 }; 
+        const neonColor = { r: 234, g: 255, b: 0 }; 
+
+        function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; initGrid(); }
+        function initGrid() {
+            circles = [];
+            const circleSize = 20; 
+            const cols = Math.floor(width / circleSize);
+            const rows = Math.floor(height / circleSize);
+            for (let y = 0; y <= rows; y++) {
+                for (let x = 0; x <= cols; x++) {
+                    circles.push(new TechCircle(x * circleSize + 10, y * circleSize + 10));
+                }
+            }
+        }
+        class TechCircle {
+            constructor(x, y) { this.x = x; this.y = y; this.baseRadius = 1.5; this.currentRadius = 1.5; this.intensity = 0; }
+            draw() {
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.currentRadius, 0, Math.PI * 2);
+                const r = darkColor.r + (neonColor.r - darkColor.r) * this.intensity;
+                const g = darkColor.g + (neonColor.g - darkColor.g) * this.intensity;
+                const b = darkColor.b + (neonColor.b - darkColor.b) * this.intensity;
+                ctx.fillStyle = `rgb(${r}, ${g}, ${b})`; ctx.fill();
+            }
+            update() {
+                let dx = mouse.x - this.x; let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+                let targetIntensity = 0; let targetRadius = this.baseRadius;
+                if (mouse.x !== undefined && distance < 120) {
+                    targetIntensity = 1 - (distance / 120);
+                    targetRadius = 8 - (distance / 120) * 6; 
+                }
+                this.intensity += (targetIntensity - this.intensity) * 0.15;
+                this.currentRadius += (targetRadius - this.currentRadius) * 0.15;
+                this.draw();
+            }
+        }
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            circles.forEach(c => c.update());
+            requestAnimationFrame(animate);
+        }
+        window.addEventListener('resize', resize);
+        
+        // Mouse Tracking
+        document.addEventListener('mousemove', (e) => { 
+            mouse.x = e.clientX; 
+            mouse.y = e.clientY; 
+        });
+        document.addEventListener('mouseleave', () => { mouse.x = undefined; mouse.y = undefined; });
+
+        resize(); animate();
+    </script>
 </body>
 </html>
