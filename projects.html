@@ -102,7 +102,7 @@
         .project-title a { color: #fff; font-size: 1.2rem; }
         .project-title a:hover { color: var(--accent); }
         .project-desc { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 15px; line-height: 1.5; }
-        /* .card-link silindi */
+        .card-link { display: inline-block; color: #fff; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--accent); padding-bottom: 2px; }
 
         footer { padding: 40px; text-align: center; border-top: 1px solid #333; background: #0D0D0D; margin-top: auto;}
         footer p { font-family: 'Reenie Beanie', cursive; color: var(--accent); font-size: 1.8rem; margin: 0; opacity: 0.8; }
@@ -164,7 +164,7 @@
                 <div class="card-content">
                     <span class="project-category">Digital Illustration</span>
                     <h3 class="project-title"><a href="project-stamps.html">The Stamp Collection</a></h3>
-                    <p class="project-desc">Minimalist architectural postage stamps.</p>
+                    <p class="project-desc">Minimalist architectural postage stamps series.</p>
                 </div>
             </div>
             <!-- Proje 4: Dere Culture Center -->
@@ -179,7 +179,7 @@
                 <div class="card-content">
                     <span class="project-category">Architecture</span>
                     <h3 class="project-title"><a href="project-dcc.html">Dere Culture Center</a></h3>
-                    <p class="project-desc">Cultural node in Söğütlüçeşme station.</p>
+                    <p class="project-desc">A cultural focal point at Söğütlüçeşme station.</p>
                 </div>
             </div>
             <!-- Proje 5: Aura Fraction -->
@@ -212,65 +212,6 @@
                     <p class="project-desc">Cinema 4D loop exploring continuous movement and soft physics.</p>
                 </div>
             </div>
-             <!-- Proje 7 -->
-             <div class="project-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?q=80&w=2071&auto=format&fit=crop" alt="Glass Horizon">
-                </div>
-                <div class="card-content">
-                    <span class="project-category">Architecture</span>
-                    <h3 class="project-title">Glass Horizon</h3>
-                    <p class="project-desc">Modern glass structure design emphasizing transparency and light interaction in public spaces.</p>
-                </div>
-            </div>
-
-            <!-- Proje 8 -->
-            <div class="project-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2068&auto=format&fit=crop" alt="Nordic Living">
-                </div>
-                <div class="card-content">
-                    <span class="project-category">Interior Design</span>
-                    <h3 class="project-title">Nordic Living</h3>
-                    <p class="project-desc">A cozy residential interior project inspired by Scandinavian design principles and natural materials.</p>
-                </div>
-            </div>
-
-            <!-- Proje 9 -->
-            <div class="project-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop" alt="Steel Framework">
-                </div>
-                <div class="card-content">
-                    <span class="project-category">Structure</span>
-                    <h3 class="project-title">Steel Framework</h3>
-                    <p class="project-desc">Detailed structural analysis and visualization for a large-scale exhibition hall.</p>
-                </div>
-            </div>
-
-            <!-- Proje 10 -->
-            <div class="project-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1479839672679-a46483c0e7c8?q=80&w=2070&auto=format&fit=crop" alt="City Flow">
-                </div>
-                <div class="card-content">
-                    <span class="project-category">Urban Planning</span>
-                    <h3 class="project-title">City Flow</h3>
-                    <p class="project-desc">Urban redevelopment plan focusing on pedestrian flow and green corridor connectivity.</p>
-                </div>
-            </div>
-
-            <!-- Proje 11 -->
-            <div class="project-card">
-                <div class="card-image">
-                    <img src="https://images.unsplash.com/photo-1531835551805-16d864c8d311?q=80&w=1974&auto=format&fit=crop" alt="Concrete Textures">
-                </div>
-                <div class="card-content">
-                    <span class="project-category">Details</span>
-                    <h3 class="project-title">Concrete Textures</h3>
-                    <p class="project-desc">A photographic and material study on the aging and aesthetic qualities of exposed concrete.</p>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -284,7 +225,6 @@
         function playVideo(card) {
             const video = card.querySelector('video');
             if(video) {
-                // Video 2. saniyeden başlasın
                 if (video.currentTime < 2) video.currentTime = 2;
                 video.play();
             }
@@ -294,7 +234,6 @@
             if(video) video.pause();
         }
 
-        // Sayfa yüklendiğinde videoların 2. saniye karesinde durması için
         window.addEventListener('load', () => {
             document.querySelectorAll('.hover-video').forEach(video => {
                 video.currentTime = 2;
