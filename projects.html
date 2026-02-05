@@ -17,7 +17,7 @@
         body { background-color: var(--bg-main); color: var(--text-main); font-family: 'Segoe UI', sans-serif; line-height: 1.6; overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; }
         a { text-decoration: none; color: inherit; transition: 0.3s; }
         
-        /* --- DİNAMİK SCROLLBAR --- */
+        /* --- DİNAMİK SCROLLBAR (Sadece kaydırınca görünür) --- */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background-color: transparent; border-radius: 10px; border: 2px solid transparent; }
@@ -43,13 +43,15 @@
         /* Logo Blink */
         .blink { animation: blinker 1s linear infinite; }
         @keyframes blinker { 50% { opacity: 0; } }
-
+        
         .hamburger { display: none; cursor: pointer; z-index: 1001; }
         .bar { display: block; width: 25px; height: 3px; margin: 5px auto; transition: all 0.3s ease-in-out; background-color: #fff; }
 
         nav ul { display: flex; list-style: none; gap: 20px; background: rgba(0,0,0,0.5); padding: 10px 20px; border-radius: 30px; backdrop-filter: blur(5px); transition: 0.3s; }
         nav a { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); }
         nav a:hover, nav a.active { color: var(--accent); }
+
+        .mobile-motto { display: none; }
 
         .container { max-width: 1400px; margin: 0 auto; padding: 100px 5% 60px; z-index: 2; position: relative; }
         .page-title { font-size: 3rem; margin-bottom: 40px; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
@@ -110,10 +112,9 @@
         .card-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; position: relative; z-index: 2;}
         .project-category { color: var(--accent); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: block; }
         .project-title { margin-bottom: 8px; font-weight: 700; line-height: 1.3; }
-        .project-title a { color: #fff; font-size: 1.2rem; }
+        .project-title a { color: #fff; font-size: 1.2rem; text-decoration: none; transition: 0.3s;}
         .project-title a:hover { color: var(--accent); }
         .project-desc { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 15px; line-height: 1.5; }
-        .card-link { display: inline-block; color: #fff; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid var(--accent); padding-bottom: 2px; }
 
         footer { padding: 40px; text-align: center; border-top: 1px solid #333; background: #0D0D0D; margin-top: auto;}
         footer p { font-family: 'Reenie Beanie', cursive; color: var(--accent); font-size: 1.8rem; margin: 0; opacity: 0.8; }
@@ -150,6 +151,7 @@
                 <li><a href="about.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
+            <div class="mobile-motto">faber est suae quisque fortunae</div>
         </nav>
     </header>
 
@@ -228,8 +230,8 @@
                     <p class="project-desc">Cinema 4D loop exploring continuous movement and soft physics.</p>
                 </div>
             </div>
-
-            <!-- Proje 7: Steel Node Study (GÜNCELLENDİ) -->
+            
+            <!-- Proje 7: Steel Node Study -->
             <div class="project-card">
                 <div class="card-image">
                     <a href="project-steel.html">
@@ -240,6 +242,22 @@
                     <span class="project-category">Technical Detailing</span>
                     <h3 class="project-title"><a href="project-steel.html">Steel Node Study</a></h3>
                     <p class="project-desc">Detailed technical study of steel connection plates based on standard profile data.</p>
+                </div>
+            </div>
+
+            <!-- Proje 8: Interface: Üsküdar (GÜNCELLENDİ: VİDEO KAPAK) -->
+            <div class="project-card" onmouseenter="playVideo(this)" onmouseleave="pauseVideo(this)">
+                <div class="card-image">
+                    <a href="project-uskudar.html">
+                        <video class="hover-video" muted loop playsinline preload="auto">
+                            <source src="interface.mp4#t=2" type="video/mp4">
+                        </video>
+                    </a>
+                </div>
+                <div class="card-content">
+                    <span class="project-category">Architecture</span>
+                    <h3 class="project-title"><a href="project-uskudar.html">Interface: Üsküdar</a></h3>
+                    <p class="project-desc">A modern imaret and accommodation structure within a historical context, converging along a common spine.</p>
                 </div>
             </div>
 
